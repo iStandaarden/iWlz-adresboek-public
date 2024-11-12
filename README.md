@@ -47,6 +47,5 @@ Neem voor het laten doorvoeren van wijzingen contact op met:
 
 - Actieprogramma iWlz: van keten naar netwerk: [het Actieprogramma iWlz](https://www.istandaarden.nl/iwlz/actieprogramma/index "Over Actieprogramma iWlz")
 - Informatiemodel iStandaarden iWlz: [Informatiemodellen](https://informatiemodel.istandaarden.nl)
-- Portaal voor iStandaarden in de
-  Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
+- Portaal voor iStandaarden in de Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
 - Zorg-AB: https://www.vzvz.nl/diensten/gemeenschappelijke-diensten/zorg-ab
