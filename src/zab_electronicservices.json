@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "electronicServices": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "gegevensdienstId": {
+              "type": "string"
+            },
+            "weergavenaam": {
+              "type": "string"
+            },
+            "authorizationEndpoint": {
+              "type": "object",
+              "properties": {
+                "authorizationEndpointuri": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "authorizationEndpointuri"
+              ]
+            },
+            "tokenEndpoint": {
+              "type": "object",
+              "properties": {
+                "tokenEndpointuri": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "tokenEndpointuri"
+              ]
+            },
+            "systeemrollen": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "systeemrolcode": {
+                      "type": "string"
+                    },
+                    "resourceEndpoint": {
+                      "type": "object",
+                      "properties": {
+                        "resourceEndpointuri": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "resourceEndpointuri"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "systeemrolcode",
+                    "resourceEndpoint"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "description",
+            "weergavenaam",
+            "authorizationEndpoint",
+            "tokenEndpoint",
+            "systeemrollen"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "electronicServices"
+  ]
+}
