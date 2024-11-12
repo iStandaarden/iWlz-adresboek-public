@@ -16,35 +16,37 @@ Het formaat (schema) is opgesteld in een eerste analyse hoe Zorg-AB ingezet kan 
 
 Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicService_ entiteit uit het Zorg-AB datamodel.
 
-| ZAB Element                | Beschrijving               | Voorbeeld                                                        |
-| :------------------------- | :------------------------- | :--------------------------------------------------------------- |
-| description                | Omschrijving service       | TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister  |
-| gegevensdienstId           |                            | CIZ_INDICATIE_TST                                                |
-| weergavenaam               |                            | TEST OMGEVING - Wlz Indicatieregister                            |
-| authorizationEndpoint      | PEP Endpoint               |                                                                  |
-| - authorizationEndpointuri | uri                        | "https://tst-api.vecozo.nl/tst/netwerkmodel/v3/resource-server/" |
-| tokenEndpoint              | Autorisatieserver endpoint |                                                                  |
-| - tokenEndpointuri         |                            | "https://tst-api.vecozo.nl/tst/netwerkmodel/v3/auth/token",      |
-| systeemrollen              | array van systeemrol       |                                                                  |
-| "systeemrol"               |                            |                                                                  |
-| - systeemrolcode           | Type systeem               | RESOURCE-SERVER Indicatieregister                                |
-| resourceEndpoint           |                            |                                                                  |
-| - resourceEndpointuri      | uri                        | test.sometest.url                                                |
+| ZAB Element                | Beschrijving                       | Voorbeeld                                                       |
+| :------------------------- | :--------------------------------- | :-------------------------------------------------------------- |
+| description                | Omschrijving service               | TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister |
+| gegevensdienstId           | Identificatie van servicecomponent | CIZ_INDICATIE_TST                                               |
+| weergavenaam               | Weergave naam in ZAB               | TEST OMGEVING - Wlz Indicatieregister                           |
+| authorizationEndpoint      | PEP Endpoint                       |                                                                 |
+| - authorizationEndpointuri | uri                                | "some.PEP.endpoint.ur."                                         |
+| tokenEndpoint              | Autorisatieserver endpoint         |                                                                 |
+| - tokenEndpointuri         | uri                                | "some.autorisatie.server.url"                                   |
+| systeemrollen              | array van systeemrol               |                                                                 |
+| "systeemrol"               | <placeholder>                      |                                                                 |
+| - systeemrolcode           | Type systeem                       | TEST-RESOURCE-SERVER                                            |
+| resourceEndpoint           | <placeholder>                      |                                                                 |
+| - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
 
 ## Adresgegevens
+
 De lijst is hier te vinden: [iWlz_services.json](./iWlz_services.json)
 
 ## Beheer
 
 Neem voor het laten doorvoeren van wijzingen contact op met:
-* servicedesk iStandaarden: [info_at_istandaarden.nl](info@istandaarden.nl)
-* Dennis de Gouw - [@dennisdegouw](http://github.com/dennisdegouw)
-* Remo van Rest - [@rvanrest](https://github.com/rvanrest)
+
+- servicedesk iStandaarden: [info_at_istandaarden.nl](info@istandaarden.nl)
+- Dennis de Gouw - [@dennisdegouw](http://github.com/dennisdegouw)
+- Remo van Rest - [@rvanrest](https://github.com/rvanrest)
 
 ## meer informatie:
-* Actieprogramma iWlz: van keten naar netwerk: [het Actieprogramma iWlz](https://www.istandaarden.nl/iwlz/actieprogramma/index "Over Actieprogramma iWlz")
-* Informatiemodel iStandaarden iWlz: [Informatiemodellen](https://informatiemodel.istandaarden.nl)
-* Portaal voor iStandaarden in de
-Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
-* Zorg-AB: https://www.vzvz.nl/diensten/gemeenschappelijke-diensten/zorg-ab
 
+- Actieprogramma iWlz: van keten naar netwerk: [het Actieprogramma iWlz](https://www.istandaarden.nl/iwlz/actieprogramma/index "Over Actieprogramma iWlz")
+- Informatiemodel iStandaarden iWlz: [Informatiemodellen](https://informatiemodel.istandaarden.nl)
+- Portaal voor iStandaarden in de
+  Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
+- Zorg-AB: https://www.vzvz.nl/diensten/gemeenschappelijke-diensten/zorg-ab
