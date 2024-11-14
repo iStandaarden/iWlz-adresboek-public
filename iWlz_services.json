@@ -18,7 +18,7 @@
           "systeemrolcode": "Register",
           "resourceEndpoint": {
             "_comment": "CIZ Indicatieregister",
-            "resourceEndpointuri": "https://CIZ-test-URL"
+            "resourceEndpointuri": "https://koppelpunt.test.ciz.nl/iwlz/indicatieregister/v2/graphql"
           }
         }
       ]
