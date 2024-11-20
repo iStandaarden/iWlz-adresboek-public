@@ -7,40 +7,18 @@
       "weergavenaam": "TEST OMGEVING - Wlz Indicatieregister",
       "authorizationEndpoint": {
         "_comment": "TEST OMGEVING - PEP Endpoint",
-        "authorizationEndpointuri": "https://tst-api.vecozo.nl/tst/netwerkmodel/v3/resource-server/"
+        "authorizationEndpointuri": "https://fictief.test.adres/"
       },
       "tokenEndpoint": {
         "_comment": "TEST OMGEVING - Autorisatieserver",
-        "tokenEndpointuri": "https://tst-api.vecozo.nl/tst/netwerkmodel/v3/auth/token"
+        "tokenEndpointuri": "https://fictief.voorbeeld-autorisatie.punt"
       },
       "systeemrollen": [
         {
           "systeemrolcode": "Register",
           "resourceEndpoint": {
             "_comment": "CIZ Indicatieregister",
-            "resourceEndpointuri": "https://koppelpunt.test.ciz.nl/iwlz/indicatieregister/v2/graphql"
-          }
-        }
-      ]
-    },
-    {
-      "description": "PRODUCTIE OMGEVING Voor het raadplegen van het Wlz Indicatieregister",
-      "gegevensdienstId": "CIZ_INDICATIE_PRD",
-      "weergavenaam": "PRODUCTIE OMGEVING - Wlz Indicatieregister",
-      "authorizationEndpoint": {
-        "_comment": "PRODUCTIE OMGEVING - PEP Endpoint",
-        "authorizationEndpointuri": "https://api.vecozo.nl/netwerkmodel/v3/resource-server/"
-      },
-      "tokenEndpoint": {
-        "_comment": "PRODUCTIE OMGEVING - Autorisatieserver",
-        "tokenEndpointuri": "https://api.vecozo.nl/netwerkmodel/v3/auth/token"
-      },
-      "systeemrollen": [
-        {
-          "systeemrolcode": "Register",
-          "resourceEndpoint": {
-            "_comment": "CIZ Indicatieregister",
-            "resourceEndpointuri": "https://koppelpunt.ciz.nl/iwlz/indicatieregister/graphql/v2/graphql"
+            "resourceEndpointuri": "https://test.graphql.end.punt.ciz"
           }
         }
       ]
