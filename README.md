@@ -1,6 +1,7 @@
 # iWlz-adresboek
 
-Tijdelijk alternatief voor Zorg-AB aansluiting.
+> [!IMPORTANT]
+> Tijdelijk alternatief voor adresboek tot de beschikbaarheid van de generieke functie of bruikbaarheid van Zorg-AB binnen het netwerk.
 
 ## Inleiding
 
@@ -12,6 +13,59 @@ Tot dat moment zal hier de lijst met benodigde endpoints worden bijgehouden in e
 
 Het formaat (schema) is opgesteld in een eerste analyse hoe Zorg-AB ingezet kan worden in het iWlz netwerk.
 
+## Opbouw adreslijst
+De opbouw van de lijst is gebaseerd op de complete OAuth-flow voor het netwerk en gaat uit van raadplegen van alle benodigde uri voor het benaderen van één resource doel. Zie het vereenvoudigde sequentie-diagram hieronder (meer detail in de Request for Comment [RFC0014 - Functionele uitwerking aanvragen van autorisatie](https://github.com/iStandaarden/iWlz-RequestForComment/blob/main/RFC/RFC0014%20-%20Functionele%20uitwerking%20aanvragen%20van%20autorisatie.md)).
+
+```mermaid
+---
+config:
+  theme: neutral
+---
+sequenceDiagram
+    actor Client
+    box lightyellow nID
+    participant authz as oAuth-server
+    participant PEP
+    end
+    box lightgreen Resource
+    participant Resource
+    end
+    Client->>+authz: request authorisation
+    activate Client
+    note right of authz: Autorisatie Endpoint
+    authz-->>-Client: token
+    deactivate Client
+    Client->>+PEP: GraphQL request + token
+    
+
+    activate Client
+    activate PEP
+    note right of PEP: PEP Endpoint
+    PEP->>PEP: validation
+    PEP->>Resource: GraphQL request forward
+    
+    activate PEP
+    activate Resource
+    note right of Resource: Resource server <br/>Endpoint
+    Resource-->>PEP: GraphQL response
+    deactivate Resource
+    deactivate PEP
+    PEP-->> Client: GraphQL response forward
+    deactivate PEP
+    deactivate Client
+  ```
+
+De flow toont dat er voor het benaderen van een register, **de Resource**, langs drie componenten moet worden gegaan. Dit zijn:
+1. de **Autorisatie server**: voor het vragen van de benodigde toegang.
+2. de **PEP**: voor de validatie en toegang tot de resource.
+3. de **Resource**: waar het register met brondata te vinden is.
+
+Elke van deze 3 componenten hebben een eigen **endpoint**. Er worden daarom **per doel(-server) ook drie endpoints** vastgelegd.
+
+> [!NOTE]
+> Op dit moment voorziet nID binnen het iWlz-netwerkstelsel de centrale voorziening van de Autorisatie server en PEP. Hierdoor zijn de url van deze twee voorzieningen voor elk huidig doel gelijk. In de toekomst kan dit misschien veranderen en kunnen er ook andere PEP of Autorisatieserver instanties worden toegevoegd voor een doel.
+
+
 ## Schema
 
 Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicService_ entiteit uit het Zorg-AB datamodel.
@@ -22,7 +76,7 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | gegevensdienstId           | Identificatie van servicecomponent | CIZ_INDICATIE_TST                                               |
 | weergavenaam               | Weergave naam in ZAB               | TEST OMGEVING - Wlz Indicatieregister                           |
 | authorizationEndpoint      | PEP Endpoint                       |                                                                 |
-| - authorizationEndpointuri | uri                                | "some.PEP.endpoint.ur."                                         |
+| - authorizationEndpointuri | uri                                | "some.PEP.endpoint.url"                                         |
 | tokenEndpoint              | Autorisatieserver endpoint         |                                                                 |
 | - tokenEndpointuri         | uri                                | "some.autorisatie.server.url"                                   |
 | systeemrollen              | array van systeemrol               |                                                                 |
@@ -30,6 +84,63 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | - systeemrolcode           | Type systeem                       | TEST-RESOURCE-SERVER                                            |
 | resourceEndpoint           | <placeholder>                      |                                                                 |
 | - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
+
+### Voorbeeld json:
+
+```json
+{
+  "_comment": "iWlz service lijst - versie 0.1 - 12-11-2024",
+  "electronicServices": [
+    {
+      "description": "TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister",
+      "gegevensdienstId": "CIZ_INDICATIE_TST",
+      "weergavenaam": "TEST OMGEVING - Wlz Indicatieregister",
+      "authorizationEndpoint": {
+        "_comment": "TEST OMGEVING - PEP Endpoint",
+        "authorizationEndpointuri": "https://fictief.PEP.adres/"
+      },
+      "tokenEndpoint": {
+        "_comment": "TEST OMGEVING - Autorisatieserver",
+        "tokenEndpointuri": "https://fictief.autorisatie.punt"
+      },
+      "systeemrollen": [
+        {
+          "systeemrolcode": "Register",
+          "resourceEndpoint": {
+            "_comment": "CIZ Indicatieregister",
+            "resourceEndpointuri": "https://test.graphql.end.punt.ciz"
+          }
+        }
+      ]
+    },
+    {
+      "description": "TEST OMGEVING Voor het raadplegen van het Bemiddelingsregister zorgkantoor 5555",
+      "gegevensdienstId": "5555_BR_TST",
+      "weergavenaam": "TEST OMGEVING - Wlz 5555 Bemiddelingsregister",
+      "authorizationEndpoint": {
+        "_comment": "TEST OMGEVING - PEP Endpoint",
+        "authorizationEndpointuri": "https://fictief.PEP.adres/"
+      },
+      "tokenEndpoint": {
+        "_comment": "TEST OMGEVING - Autorisatieserver",
+        "tokenEndpointuri": "https://fictief.autorisatie.punt"
+      },
+      "systeemrollen": [
+        {
+          "systeemrolcode": "Register",
+          "resourceEndpoint": {
+            "_comment": "5555 Bemiddelingsregister",
+            "resourceEndpointuri": "https://test.5555.resource.punt"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+> [!NOTE] 
+> Het voorbeeld laat ook zien dat voor de twee **resources** de endpoints voor de autorisatie en PEP gelijk zijn. 
 
 ## Adresgegevens
 
