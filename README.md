@@ -3,6 +3,16 @@
 > [!IMPORTANT]
 > Tijdelijk alternatief voor adresboek tot de beschikbaarheid van de generieke functie of bruikbaarheid van Zorg-AB binnen het netwerk.
 
+- [iWlz-adresboek](#iwlz-adresboek)
+  - [Inleiding](#inleiding)
+  - [Opbouw adreslijst](#opbouw-adreslijst)
+  - [Schema](#schema)
+    - [Voorbeeld](#voorbeeld)
+- [Adresgegevens](#adresgegevens)
+  - [Beheer](#beheer)
+- [meer informatie:](#meer-informatie)
+
+
 ## Inleiding
 
 Binnen het iWLZ-netwerk wordt informatie gedeeld via registers die te benaderen zijn met GraphQL. Om te ontdekken hoe registers en bijbehorende services in het netwerk bereikt kunnen worden is er een adresboek nodig. Het fungeert als ware een register dat informatie bijhoudt over de verschillende gegevensdiensten die worden aangeboden door verschillende netwerkdeelnemers.
@@ -14,7 +24,7 @@ Tot dat moment zal hier de lijst met benodigde endpoints worden bijgehouden in e
 Het formaat (schema) is opgesteld in een eerste analyse hoe Zorg-AB ingezet kan worden in het iWlz netwerk.
 
 ## Opbouw adreslijst
-De opbouw van de lijst is gebaseerd op de complete OAuth-flow voor het netwerk en gaat uit van raadplegen van alle benodigde uri voor het benaderen van één resource doel. Zie het vereenvoudigde sequentie-diagram hieronder (meer detail in de Request for Comment [RFC0014 - Functionele uitwerking aanvragen van autorisatie](https://github.com/iStandaarden/iWlz-RequestForComment/blob/main/RFC/RFC0014%20-%20Functionele%20uitwerking%20aanvragen%20van%20autorisatie.md)).
+De opbouw van de lijst is gebaseerd op de complete OAuth-flow voor het netwerk en gaat uit van alle benodigde uri voor het benaderen van één resource doel. Zie het vereenvoudigde sequentie-diagram hieronder (meer detail in de Request for Comment [RFC0014 - Functionele uitwerking aanvragen van autorisatie](https://github.com/iStandaarden/iWlz-RequestForComment/blob/main/RFC/RFC0014%20-%20Functionele%20uitwerking%20aanvragen%20van%20autorisatie.md)).
 
 ```mermaid
 ---
@@ -22,38 +32,38 @@ config:
   theme: neutral
 ---
 sequenceDiagram
-    actor Client
-    box lightyellow nID
-    participant authz as oAuth-server
-    participant PEP
-    end
-    box lightgreen Resource
-    participant Resource
-    end
-    Client->>+authz: request authorisation
-    activate Client
-    note right of authz: Autorisatie Endpoint
-    authz-->>-Client: token
-    deactivate Client
-    Client->>+PEP: GraphQL request + token
-    
+  actor Client
+  box lightyellow nID
+  participant authz as oAuth-server
+  participant PEP
+  end
+  box lightgreen Resource
+  participant Resource
+  end
+  Client->>+authz: request authorisation
+  activate Client
+  note right of authz: Autorisatie Endpoint
+  authz-->>-Client: token
+  deactivate Client
+  Client->>+PEP: GraphQL request + token
+  
 
-    activate Client
-    activate PEP
-    note right of PEP: PEP Endpoint
-    PEP->>PEP: validation
-    PEP->>Resource: GraphQL request forward
-    
-    activate PEP
-    activate Resource
-    note right of Resource: Resource server <br/>Endpoint
-    Resource-->>PEP: GraphQL response
-    deactivate Resource
-    deactivate PEP
-    PEP-->> Client: GraphQL response forward
-    deactivate PEP
-    deactivate Client
-  ```
+  activate Client
+  activate PEP
+  note right of PEP: PEP Endpoint
+  PEP->>PEP: validation
+  PEP->>Resource: GraphQL request forward
+  
+  activate PEP
+  activate Resource
+  note right of Resource: Resource server <br/>Endpoint
+  Resource-->>PEP: GraphQL response
+  deactivate Resource
+  deactivate PEP
+  PEP-->> Client: GraphQL response forward
+  deactivate PEP
+  deactivate Client
+```
 
 De flow toont dat er voor het benaderen van een register, **de Resource**, langs drie componenten moet worden gegaan. Dit zijn:
 1. de **Autorisatie server**: voor het vragen van de benodigde toegang.
@@ -85,7 +95,12 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | resourceEndpoint           | <placeholder>                      |                                                                 |
 | - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
 
-### Voorbeeld json:
+### Voorbeeld 
+Het voorbeeld bevat voorbeeldgegevens voor het benaderen van 2 functionele resources:
+1. Het eerste voorbeeld is voor het benaderen van de resource: Test omgeving Indicatieregister.
+2. Het tweede voorbeeld is voor het benaderen van de resource: Test omgeving Bemiddelingsregister van zorgkantoor regio 5555
+
+json:
 
 ```json
 {
@@ -140,11 +155,12 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 ```
 
 > [!NOTE] 
-> Het voorbeeld laat ook zien dat voor de twee **resources** de endpoints voor de autorisatie en PEP gelijk zijn. 
+> Het voorbeeld laat ook zien dat voor de twee **resources** de endpoints voor de autorisatie en PEP gelijk zijn omdat nID voor beide resources deze functies vervult.
 
-## Adresgegevens
+# Adresgegevens
 
-De lijst is hier te vinden: [iWlz_services.json](./iWlz_services.json)
+> [!TIP]
+> **De Adreslijst is hier te vinden: [iWlz_services.json](./iWlz_services.json)**
 
 ## Beheer
 
@@ -154,7 +170,7 @@ Neem voor het laten doorvoeren van wijzingen contact op met:
 - Dennis de Gouw - [@dennisdegouw](http://github.com/dennisdegouw)
 - Remo van Rest - [@rvanrest](https://github.com/rvanrest)
 
-## meer informatie:
+# meer informatie:
 
 - Actieprogramma iWlz: van keten naar netwerk: [het Actieprogramma iWlz](https://www.istandaarden.nl/iwlz/actieprogramma/index "Over Actieprogramma iWlz")
 - Informatiemodel iStandaarden iWlz: [Informatiemodellen](https://informatiemodel.istandaarden.nl)
