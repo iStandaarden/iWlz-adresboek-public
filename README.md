@@ -160,7 +160,10 @@ json:
 # Adresgegevens
 
 > [!TIP]
-> **De Adreslijst is hier te vinden: [iWlz_services.json](./iWlz_services.json)**
+> **De Adreslijst is te vinden in de afgeschermde repository: [iWlz-adresboek-private](https://github.com/iStandaarden/iWlz-adresboek-private)**
+> Om toegang te krijgen tot deze repository is:
+> 1. Account nodig op Github
+> 2. Toegevoegd worden als member. Stuur hiervoor een bericht aan met vermelding van "Aanvraag toegang iWlz Adresboek private en meegeven van organisatie en githubaccount.
 
 ## Beheer
 
