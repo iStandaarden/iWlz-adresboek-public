@@ -163,7 +163,9 @@ json:
 > **De Adreslijst is te vinden in de afgeschermde repository: [iWlz-adresboek-private](https://github.com/iStandaarden/iWlz-adresboek-private)**
 > Om toegang te krijgen tot deze repository is:
 > 1. Account nodig op Github
-> 2. Toegevoegd worden als member. Stuur hiervoor een bericht aan met vermelding van "Aanvraag toegang iWlz Adresboek private en meegeven van organisatie en githubaccount.
+> 2. Toegevoegd worden als member.
+> 3. Stuur daarna een bericht met vermelding van "Aanvraag toegang iWlz Adresboek private met meegeven van organisatie en githubaccount aan Dennis de Gouw - [@dennisdegouw](http://github.com/dennisdegouw) of Remo van Rest - [@rvanrest](https://github.com/rvanrest)
+> 4. Je zal daarna een uitnodiging krijgen tot de private-repository
 
 ## Beheer
 
