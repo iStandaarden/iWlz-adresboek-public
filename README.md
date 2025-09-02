@@ -7,8 +7,12 @@
   - [Inleiding](#inleiding)
   - [Opbouw adreslijst](#opbouw-adreslijst)
   - [Schema](#schema)
-    - [Voorbeeld](#voorbeeld)
-- [Adresgegevens](#adresgegevens)
+  - [Opbouw `gegevensdienstId`](#opbouw-gegevensdienstid)
+  - [Voorbeelden](#voorbeelden)
+    - [1. Voorbeeld Testomgeving Indicatieregister.](#1-voorbeeld-testomgeving-indicatieregister)
+    - [2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777](#2-voorbeeld-testomgeving-bemiddelingsregister-van-zorgkantoor-regio-5555-en-7777)
+    - [3. Voorbeeeld Test notificatieadres van zorgaanbieder 12121212](#3-voorbeeeld-test-notificatieadres-van-zorgaanbieder-12121212)
+- [Adressenlijst](#adressenlijst)
   - [Beheer](#beheer)
 - [meer informatie:](#meer-informatie)
 
@@ -95,20 +99,54 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | resourceEndpoint           | <placeholder>                      |                                                                 |
 | - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
 
-### Voorbeeld 
-Het voorbeeld bevat voorbeeldgegevens voor het benaderen van 2 functionele resources:
-1. Het eerste voorbeeld is voor het benaderen van de resource: Test omgeving Indicatieregister.
-2. Het tweede voorbeeld is voor het benaderen van de resource: Test omgeving Bemiddelingsregister van zorgkantoor regio 5555
+## Opbouw `gegevensdienstId` 
+
+De opbouw van de `gegevensdienstID` binnen het iWlz netwerkmodel is als volgt opgebouwd: 
+
+> **`[OrganisatieID]-[Functionaliteit]-[Omgeving]`**
+
+**1. OrganisatieID**
+
+Een waarde volgens de onderstaande tabel: 
+
+| Organisatie   | OrganisatieID gevuld met waarde     | Referentie                                                |
+| :------------ | :---------------------------------- | :-------------------------------------------------------- |
+| CIZ           | *CIZ*                               |
+| Zorgaanbieder | de *AGB-code* van de zorgaanbieder  | [AGB-register](https://www.vektis.nl/agb-register/zoeken) |
+| Zorgkantoor   | de *uzovi-code* van het zorgkantoor | [UZOVI-register](https://www.vektis.nl/uzovi-register)    |
+
+**2. Functionaliteit**
+
+Een waarde uit de volgende lijst:
+| Functionaliteit | Toelichting | Resource-kenmerk | 
+| :-------------- | :---------- | :--- |
+| REGISTER | Het betreft een adres voor het raadplegen van een register   | Register-endpoint |
+| NOTIFICATIE | Het betreft een adres voor het ontvangen van een notificatie | Notificatie-endpoint |
+| MELDING | Het betreft een adres voor het ontvangen van een melding | Melding-endpoint | 
+
+**3. Omgeving**
+
+Een waarde uit de volgende lijst: 
+
+| Omgeving | Toelichting |
+| :--- | :--- |
+| PRD | Adres betreft de Productieomgeving |
+| TST | Adres betreft een Testomgeving |
+| ACC | Adres betreft een Acceptatieomgeving | 
+
+## Voorbeelden 
+
+
+### 1. Voorbeeld Testomgeving Indicatieregister.
 
 json:
-
 ```json
 {
   "_comment": "iWlz service lijst - versie 0.1 - 12-11-2024",
   "electronicServices": [
     {
       "description": "TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister",
-      "gegevensdienstId": "CIZ_INDICATIE_TST",
+      "gegevensdienstId": "CIZ_REGISTER_TST",
       "weergavenaam": "TEST OMGEVING - Wlz Indicatieregister",
       "authorizationEndpoint": {
         "_comment": "TEST OMGEVING - PEP Endpoint",
@@ -120,17 +158,28 @@ json:
       },
       "systeemrollen": [
         {
-          "systeemrolcode": "Register",
+          "systeemrolcode": "REGISTER",
           "resourceEndpoint": {
             "_comment": "CIZ Indicatieregister",
             "resourceEndpointuri": "https://test.graphql.end.punt.ciz"
           }
         }
       ]
-    },
+    }
+}
+```
+
+### 2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777
+
+json:
+
+```json
+{
+  "_comment": "iWlz service lijst - versie 0.1 - 12-11-2024",
+  "electronicServices": [
     {
       "description": "TEST OMGEVING Voor het raadplegen van het Bemiddelingsregister zorgkantoor 5555",
-      "gegevensdienstId": "5555_BR_TST",
+      "gegevensdienstId": "5555_REGISTER_TST",
       "weergavenaam": "TEST OMGEVING - Wlz 5555 Bemiddelingsregister",
       "authorizationEndpoint": {
         "_comment": "TEST OMGEVING - PEP Endpoint",
@@ -142,14 +191,36 @@ json:
       },
       "systeemrollen": [
         {
-          "systeemrolcode": "Register",
+          "systeemrolcode": "REGISTER",
           "resourceEndpoint": {
             "_comment": "5555 Bemiddelingsregister",
             "resourceEndpointuri": "https://test.5555.resource.punt"
           }
         }
       ]
-    }
+    },
+    {
+      "description": "TEST OMGEVING Voor het raadplegen van het Bemiddelingsregister zorgkantoor 5555",
+      "gegevensdienstId": "7777_REGISTER_TST",
+      "weergavenaam": "TEST OMGEVING - Wlz 5555 Bemiddelingsregister",
+      "authorizationEndpoint": {
+        "_comment": "TEST OMGEVING - PEP Endpoint",
+        "authorizationEndpointuri": "https://fictief.PEP.adres/"
+      },
+      "tokenEndpoint": {
+        "_comment": "TEST OMGEVING - Autorisatieserver",
+        "tokenEndpointuri": "https://fictief.autorisatie.punt"
+      },
+      "systeemrollen": [
+        {
+          "systeemrolcode": "REGISTER",
+          "resourceEndpoint": {
+            "_comment": "7777 Bemiddelingsregister",
+            "resourceEndpointuri": "https://test.7777.resource.punt"
+          }
+        }
+      ]
+    }    
   ]
 }
 ```
@@ -157,7 +228,40 @@ json:
 > [!NOTE] 
 > Het voorbeeld laat ook zien dat voor de twee **resources** de endpoints voor de autorisatie en PEP gelijk zijn omdat nID voor beide resources deze functies vervult.
 
-# Adresgegevens
+### 3. Voorbeeeld Test notificatieadres van zorgaanbieder 12121212
+
+json:
+```json
+{
+  "_comment": "iWlz service lijst - versie 0.1 - 12-11-2024",
+  "electronicServices": [
+    {
+      "description": "TEST OMGEVING Voor het notificeren van zorgaanbieder 12121212",
+      "gegevensdienstId": "12121212_NOTIFICATIE_TST",
+      "weergavenaam": "TEST OMGEVING - notificaties voor 12121212",
+      "authorizationEndpoint": {
+        "_comment": "TEST OMGEVING - PEP Endpoint",
+        "authorizationEndpointuri": "https://fictief.PEP.adres/"
+      },
+      "tokenEndpoint": {
+        "_comment": "TEST OMGEVING - Autorisatieserver",
+        "tokenEndpointuri": "https://fictief.autorisatie.punt"
+      },
+      "systeemrollen": [
+        {
+          "systeemrolcode": "NOTIFICATIE",
+          "resourceEndpoint": {
+            "_comment": "12121212 notificatie endpoint",
+            "resourceEndpointuri": "https://test.notificatie.end.punt"
+          }
+        }
+      ]
+    }
+}
+```
+
+
+# Adressenlijst
 
 > [!TIP]
 > **De Adreslijst is te vinden in de afgeschermde repository: [iWlz-adresboek-private](https://github.com/iStandaarden/iWlz-adresboek-private)**
