@@ -91,7 +91,7 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | ZAB Element                | Beschrijving                       | Voorbeeld                                                       |
 | :------------------------- | :--------------------------------- | :-------------------------------------------------------------- |
 | description                | Omschrijving service               | TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister |
-| gegevensdienstId           | Identificatie van servicecomponent | CIZ_INDICATIE_TST                                               |
+| gegevensdienstId           | Identificatie van servicecomponent | CIZ_REGISTER_TST                                               |
 | weergavenaam               | Weergave naam in ZAB               | TEST OMGEVING - Wlz Indicatieregister                           |
 | authorizationEndpoint      | PEP Endpoint                       |                                                                 |
 | - authorizationEndpointuri | uri                                | "some.PEP.endpoint.url"                                         |
@@ -99,7 +99,7 @@ Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicSe
 | - tokenEndpointuri         | uri                                | "some.autorisatie.server.url"                                   |
 | systeemrollen              | array van systeemrol               |                                                                 |
 | "systeemrol"               | <placeholder>                      |                                                                 |
-| - systeemrolcode           | Type systeem                       | TEST-RESOURCE-SERVER                                            |
+| - systeemrolcode           | Type systeem                       | REGISTER                                            |
 | resourceEndpoint           | <placeholder>                      |                                                                 |
 | - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
 
