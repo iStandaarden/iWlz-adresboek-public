@@ -8,6 +8,10 @@
   - [Opbouw adreslijst](#opbouw-adreslijst)
   - [Schema](#schema)
   - [Opbouw `gegevensdienstId`](#opbouw-gegevensdienstid)
+      - [1. OrganisatieID](#1-organisatieid)
+      - [2. Functionaliteit](#2-functionaliteit)
+      - [3. Omgeving](#3-omgeving)
+  - [Opbouw `systeemrolcode`](#opbouw-systeemrolcode)
   - [Voorbeelden](#voorbeelden)
     - [1. Voorbeeld Testomgeving Indicatieregister.](#1-voorbeeld-testomgeving-indicatieregister)
     - [2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777](#2-voorbeeld-testomgeving-bemiddelingsregister-van-zorgkantoor-regio-5555-en-7777)
@@ -105,7 +109,7 @@ De opbouw van de `gegevensdienstID` binnen het iWlz netwerkmodel is als volgt op
 
 > **`[OrganisatieID]-[Functionaliteit]-[Omgeving]`**
 
-**1. OrganisatieID**
+#### 1. OrganisatieID
 
 Een waarde volgens de onderstaande tabel: 
 
@@ -115,7 +119,7 @@ Een waarde volgens de onderstaande tabel:
 | Zorgaanbieder | de *AGB-code* van de zorgaanbieder  | [AGB-register](https://www.vektis.nl/agb-register/zoeken) |
 | Zorgkantoor   | de *uzovi-code* van het zorgkantoor | [UZOVI-register](https://www.vektis.nl/uzovi-register)    |
 
-**2. Functionaliteit**
+#### 2. Functionaliteit
 
 Een waarde uit de volgende lijst:
 | Functionaliteit | Toelichting | Resource-kenmerk | 
@@ -124,7 +128,7 @@ Een waarde uit de volgende lijst:
 | NOTIFICATIE | Het betreft een adres voor het ontvangen van een notificatie | Notificatie-endpoint |
 | MELDING | Het betreft een adres voor het ontvangen van een melding | Melding-endpoint | 
 
-**3. Omgeving**
+#### 3. Omgeving
 
 Een waarde uit de volgende lijst: 
 
@@ -134,8 +138,11 @@ Een waarde uit de volgende lijst:
 | TST | Adres betreft een Testomgeving |
 | ACC | Adres betreft een Acceptatieomgeving | 
 
-## Voorbeelden 
+## Opbouw `systeemrolcode`
 
+De vulling van `systeemrolcode` is bepaald door de waarden uit het onderdeel [2. Functionaliteit](#2-functionaliteit) van de `gegevensdienstID`.
+
+## Voorbeelden 
 
 ### 1. Voorbeeld Testomgeving Indicatieregister.
 
