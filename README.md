@@ -200,7 +200,9 @@ json:
         }
       ]
     }
+  ]
 }
+
 ```
 
 ### 2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777
@@ -298,7 +300,9 @@ json:
         }
       ]
     }
+  ]
 }
+
 ```
 
 
