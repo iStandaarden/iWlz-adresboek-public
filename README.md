@@ -14,6 +14,7 @@
 > Tijdelijk alternatief voor adresboek tot de beschikbaarheid van de generieke functie of bruikbaarheid van Zorg-AB binnen het netwerk.
 
 - [iWlz-adresboek](#iwlz-adresboek)
+- [Adressenlijst](#adressenlijst)
   - [Inleiding](#inleiding)
   - [Opbouw adreslijst](#opbouw-adreslijst)
   - [Schema](#schema)
@@ -26,7 +27,7 @@
     - [1. Voorbeeld Testomgeving Indicatieregister.](#1-voorbeeld-testomgeving-indicatieregister)
     - [2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777](#2-voorbeeld-testomgeving-bemiddelingsregister-van-zorgkantoor-regio-5555-en-7777)
     - [3. Voorbeeeld Test notificatieadres van zorgaanbieder 12121212](#3-voorbeeeld-test-notificatieadres-van-zorgaanbieder-12121212)
-- [Adressenlijst](#adressenlijst)
+- [Adressenlijst](#adressenlijst-1)
   - [Beheer](#beheer)
 - [meer informatie:](#meer-informatie)
 
@@ -150,7 +151,23 @@ Een waarde uit de volgende lijst:
 
 ## Opbouw `systeemrolcode`
 
-De vulling van `systeemrolcode` is bepaald door de waarden uit het onderdeel [2. Functionaliteit](#2-functionaliteit) van de `gegevensdienstID`.
+De vulling van `systeemrolcode` is bepaald door de combinatie uit het onderdeel [2. Functionaliteit](#2-functionaliteit) en een inhoud roltype. Hiermee kan er binnen een functionaliteit aangegeven worden voor welke inhoud die functionaliteit geschikt is. 
+
+Op dit moment zijn er twee inhoud roltypen:
+1. Indicatie
+2. Bemiddeling
+
+Alleen voor de functionaliteit `NOTIFICATIE` is dit onderscheid toegevoegd. 
+
+De beschikbare `systeemrolcodes` zijn nu:
+
+| systeemrolcode |	Betekenis |
+| :-- | :-- |
+| REGISTER | Endpoint voor raadplegen register | 
+| MELDING	| Endpoint voor iWlz (Fout-)meldingen | 
+| NOTIFICATIE_INDICATIE	| Notificatie endpoint voor het ontvangen van notificatie uit Indicatieregister | 
+| NOTIFICATIE_BEMIDDELING	| Notificatie endpoint voor het ontvangen van notificaties uit Bemiddelingsregister | 
+
 
 ## Voorbeelden 
 
@@ -266,9 +283,16 @@ json:
       },
       "systeemrollen": [
         {
-          "systeemrolcode": "NOTIFICATIE",
+          "systeemrolcode": "NOTIFICATIE_INDICATIE",
           "resourceEndpoint": {
-            "_comment": "12121212 notificatie endpoint",
+            "_comment": "12121212 notificatie endpoint voor notificaties uit Indicatieregister",
+            "resourceEndpointuri": "https://test.notificatie.end.punt"
+          }
+        },
+        {
+          "systeemrolcode": "NOTIFICATIE_BEMIDDELING",
+          "resourceEndpoint": {
+            "_comment": "12121212 notificatie endpoint voor notificaties uit Bemiddelingsregister",
             "resourceEndpointuri": "https://test.notificatie.end.punt"
           }
         }
