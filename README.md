@@ -23,6 +23,8 @@
       - [2. Functionaliteit](#2-functionaliteit)
       - [3. Omgeving](#3-omgeving)
   - [Opbouw `systeemrolcode`](#opbouw-systeemrolcode)
+  - [Gebruik `period.start` en/of `period.end`](#gebruik-periodstart-enof-periodend)
+    - [Mogelijke situaties](#mogelijke-situaties)
   - [Voorbeelden](#voorbeelden)
     - [1. Voorbeeld Testomgeving Indicatieregister.](#1-voorbeeld-testomgeving-indicatieregister)
     - [2. Voorbeeld Testomgeving Bemiddelingsregister van zorgkantoor regio 5555 en 7777](#2-voorbeeld-testomgeving-bemiddelingsregister-van-zorgkantoor-regio-5555-en-7777)
@@ -96,23 +98,27 @@ Elke van deze 3 componenten hebben een eigen **endpoint**. Er worden daarom **pe
 
 
 ## Schema
+Het [iWlz services-schema](./iWlz_services-schema.json) is gebaseerd op de _ElectronicService_ entiteit uit het Zorg-AB datamodel en de [period](https://hl7.org/fhir/R4/datatypes.html#Period) definitie zoals toegepast in de [Generieke Functie voor adressering](https://minvws.github.io/generiekefuncties-docs/en/csd.html#endpoint) met betrekking tot het vastleggen van de metadata op een Endpoint.
 
-Het [schema](./src/zab_electronicservices.json) is gebaseerd op de _ElectronicService_ entiteit uit het Zorg-AB datamodel.
+Voor elke resource-endpoint kunnen de volgende gegevens worden vastgelegd:
 
-| ZAB Element                | Beschrijving                       | Voorbeeld                                                       |
-| :------------------------- | :--------------------------------- | :-------------------------------------------------------------- |
-| description                | Omschrijving service               | TEST OMGEVING Voor het raadplegen van het Wlz Indicatieregister |
-| gegevensdienstId           | Identificatie van servicecomponent | CIZ_REGISTER_TST                                               |
-| weergavenaam               | Weergave naam in ZAB               | TEST OMGEVING - Wlz Indicatieregister                           |
-| authorizationEndpoint      | PEP Endpoint                       |                                                                 |
-| - authorizationEndpointuri | uri                                | "some.PEP.endpoint.url"                                         |
-| tokenEndpoint              | Autorisatieserver endpoint         |                                                                 |
-| - tokenEndpointuri         | uri                                | "some.autorisatie.server.url"                                   |
-| systeemrollen              | array van systeemrol               |                                                                 |
-| "systeemrol"               | <placeholder>                      |                                                                 |
-| - systeemrolcode           | Type systeem                       | REGISTER                                            |
-| resourceEndpoint           | <placeholder>                      |                                                                 |
-| - resourceEndpointuri      | uri                                | "test.sometest.url"                                             |
+| Attribuut                      | Card |  Beschrijving                          |  Voorbeeld                                                          |
+|--------------------------------|------|----------------------------------------|---------------------------------------------------------------------|
+|  description                   | 1..1 |  Omschrijving service                  |  TEST OMGEVING Voor het raadplegen   van het Wlz Indicatieregister  |
+|  gegevensdienstId              | 1..1 |  Identificatie van   servicecomponent  |  CIZ_REGISTER_TST                                                   |
+|  weergavenaam                  | 0..1 |  Weergave naam                         |  TEST OMGEVING - Wlz   Indicatieregister                            |
+|  authorizationEndpoint         | 1..1 |  PEP Endpoint                          |                                                                     |
+|  -   authorizationEndpointuri  | 1..1 |  uri                                   |  "some.PEP.endpoint.url"                                            |
+|  tokenEndpoint                 | 1..1 |  Autorisatieserver endpoint            |                                                                     |
+|  -   tokenEndpointuri          | 1..1 |  uri                                   |  "some.autorisatie.server.url"                                      |
+|  systeemrollen                 | 1..1 |  array van systeemrol                  |                                                                     |
+|  "systeemrol"                  |      |                                        |                                                                     |
+|  -   systeemrolcode            | 1..1 |  Type systeem                          |  REGISTER                                                           |
+|  resourceEndpoint              |      |                                        |                                                                     |
+|  -   resourceEndpointuri       | 1..1 |  uri                                   |  "test.sometest.url"                                                |
+| period                         |      |                                        |                                                                     |
+| - start                        | 0..1 | datetime                               |                                                                     |
+| - end                          | 0..1 | datetime                               |                                                                     |
 
 ## Opbouw `gegevensdienstId` 
 
@@ -167,6 +173,28 @@ De beschikbare `systeemrolcodes` zijn nu:
 | MELDING	| Endpoint voor iWlz (Fout-)meldingen | 
 | NOTIFICATIE_INDICATIE	| Notificatie endpoint voor het ontvangen van notificatie uit Indicatieregister | 
 | NOTIFICATIE_BEMIDDELING	| Notificatie endpoint voor het ontvangen van notificaties uit Bemiddelingsregister | 
+
+## Gebruik `period.start` en/of `period.end`
+
+Optioneel is per Resource-endpoint een geldigheidsperiode mee te geven. Daarmee kan de adreslijst geactualiseerd worden voordat er een feitelijke wijziging in de werking van dat resource-endpoint ook heeft plaatsgevonden. 
+
+### Mogelijke situaties
+
+**Betekenis**
+
+| Period.start | Period.end | Betekenis |
+|---|---|---|
+| *afwezig* | *afwezig* | Endpoint is actueel |
+| gevuld | *afwezig* | Endpoint is actief vanaf het moment gevuld in start |
+| *afwezig* | gevuld | endpoint is actief tot het moment gevuld in end |
+| gevuld | gevuld | Endpoint is actief in de tussenliggende periode vanaf het moment gevuld in start en tot het moment gevuld in end |
+
+**Overlap**  
+Overlap in geldigheidsperiodes voor dezelfde Gegevensdienst en Systeemrolcode is toestaan. Dit maakt bijvoorbeeld een overgangsperiode mogelijk. Hieronder enkele richtlijnen wanneer er overlap is.
+
+1. Neem het endpoint met de recentste start EN lege end. Ook wanneer er een recenter start is met een end die nog niet is verlopen.
+2. Als er geen lege end is neem dan het end wat nog niet is verstreken en het verst in de toekomst ligt.
+
 
 
 ## Voorbeelden 

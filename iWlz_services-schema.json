@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "_comment": {
+      "type": "string",
+      "description": "Commentaar veld voor versie-informatie"
+    },
+    "$schema": {
+      "type": "string",
+      "description": "Verwijzing naar het bovenliggende schema"
+    },
+    "electronicServices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "gegevensdienstId": {
+            "type": "string"
+          },
+          "weergavenaam": {
+            "type": "string"
+          },
+          "authorizationEndpoint": {
+            "type": "object",
+            "properties": {
+              "_comment": {
+                "type": "string"
+              },
+              "authorizationEndpointuri": {
+                "type": "string"
+              }
+            },
+            "required": ["authorizationEndpointuri"],
+            "additionalProperties": false
+          },
+          "tokenEndpoint": {
+            "type": "object",
+            "properties": {
+              "_comment": {
+                "type": "string"
+              },
+              "tokenEndpointuri": {
+                "type": "string"
+              }
+            },
+            "required": ["tokenEndpointuri"],
+            "additionalProperties": false
+          },
+          "systeemrollen": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "systeemrolcode": {
+                  "type": "string"
+                },
+                "resourceEndpoint": {
+                  "type": "object",
+                  "properties": {
+                    "_comment": {
+                      "type": "string"
+                    },
+                    "resourceEndpointuri": {
+                      "type": "string"
+                    },
+                    "period": {
+                      "$ref": "#/$defs/period"
+                    }
+                  },
+                  "required": ["resourceEndpointuri"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["systeemrolcode", "resourceEndpoint"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "description",
+          "weergavenaam",
+          "authorizationEndpoint",
+          "tokenEndpoint",
+          "systeemrollen"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["electronicServices"],
+  "additionalProperties": false,
+  "$defs": {
+    "period": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
